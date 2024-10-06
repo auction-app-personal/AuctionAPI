@@ -40,6 +40,10 @@ public class Auction {
     @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
     private List<Lot> lotList;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id")
+    private Account account;
+
     @ManyToMany
     @JoinTable(
             name = "account_auction",
