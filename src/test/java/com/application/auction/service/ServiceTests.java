@@ -1,4 +1,4 @@
-package com.application.auction.dao_layer;
+package com.application.auction.service;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class DAOTests {
+public class ServiceTests {
     @BeforeAll
     static void setUpBeforeClass() throws Exception {
         //setup db
