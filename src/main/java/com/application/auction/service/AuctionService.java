@@ -42,4 +42,25 @@ public class AuctionService {
         Auction newAuction = AuctionMapper.toEntity(auction, account);
         auctionDAO.save(newAuction);
     }
+
+    public void updateAuction(AuctionDTO auction, Long id) {
+        Account account = accountDAO.findById(auction.getOwnerId())
+                .orElseThrow(() -> new ResourceNotFoundException("Account with id " + id + " not found"));
+        Auction oldAuction = auctionDAO.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Auction with id " + id + " not found"));
+        oldAuction.setName(auction.getName());
+        oldAuction.setDescription(auction.getDescription());
+        oldAuction.setStatus(auction.getStatus());
+        oldAuction.setStartTimestamp(auction.getStartTimestamp());
+        oldAuction.setDuration(auction.getDuration());
+        oldAuction.setAccount(account);
+        auctionDAO.save(oldAuction);
+    }
+
+    public void deleteAuction(Long id) {
+        if (!auctionDAO.existsById(id)) {
+            throw new ResourceNotFoundException("Auction with id " + id + " not found");
+        }
+        auctionDAO.deleteById(id);
+    }
 }

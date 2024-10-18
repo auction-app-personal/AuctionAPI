@@ -32,8 +32,21 @@ public class AuctionController {
     }
 
     @PostMapping
-    public ResponseEntity<AuctionDTO> createAuction(@RequestBody AuctionDTO auction) {
+    public ResponseEntity<Void> createAuction(@RequestBody AuctionDTO auction) {
         auctionService.saveAuction(auction);
-        return new ResponseEntity<>(auction, HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateAuction(@PathVariable Long id, @RequestBody AuctionDTO auction) {
+        auctionService.updateAuction(auction, id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAuction(@PathVariable Long id) {
+        auctionService.deleteAuction(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
