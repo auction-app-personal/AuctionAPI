@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AuctionDAO extends CrudRepository<Auction, Integer> {
+public interface AuctionDAO extends CrudRepository<Auction, Long> {
 }
