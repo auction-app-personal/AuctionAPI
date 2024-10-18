@@ -45,10 +45,9 @@ public class AccountService {
     }
 
     public void deleteAccount(Long id) {
-        Account account = accountDAO.findById(id).orElse(null);
-        if (account == null) {
+        if (!accountDAO.existsById(id)) {
             throw new ResourceNotFoundException("Account with id " + id + " not found");
         }
-        accountDAO.delete(account);
+        accountDAO.deleteById(id);
     }
 }
