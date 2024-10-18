@@ -10,6 +10,7 @@ import lombok.Setter;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "auction")
@@ -28,11 +29,12 @@ public class Auction {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "duration")
-    private Duration duration;
+    @Column(name = "duration", columnDefinition = "interval")
+    private Duration duration = Duration.ofMinutes(0);
 
     @Column(name = "status")
-    private AuctionStatus status;
+    @Enumerated(EnumType.STRING)
+    private AuctionStatus status = AuctionStatus.CREATED;
 
     @Column(name = "start_timestamp")
     private LocalDateTime startTimestamp;
@@ -40,8 +42,8 @@ public class Auction {
     @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
     private List<Lot> lotList;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id")
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name="account_id")
     private Account account;
 
     @ManyToMany
@@ -52,11 +54,20 @@ public class Auction {
     )
     private List<Account> accounts;
 
-    public Auction(String name, String description, Duration duration, AuctionStatus status, LocalDateTime startTimestamp) {
+    public Auction(String name) {
         this.name = name;
-        this.description = description;
-        this.duration = duration;
-        this.status = status;
-        this.startTimestamp = startTimestamp;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Auction auction = (Auction) o;
+        return Objects.equals(name, auction.name) && Objects.equals(description, auction.description) && Objects.equals(duration, auction.duration) && status == auction.status && Objects.equals(startTimestamp, auction.startTimestamp) && Objects.equals(account, auction.account);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, description, duration, status, startTimestamp, account);
     }
 }

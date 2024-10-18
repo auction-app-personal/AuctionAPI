@@ -30,12 +30,13 @@ public class Account {
     private String password;
 
     @Column(name = "role")
-    private AccountRole accountRole;
+    @Enumerated(EnumType.STRING)
+    private AccountRole role;
 
     @OneToMany(mappedBy = "account")
     private List<Bid> bids;
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Auction> auctionsOwnedByAccount;
 
     @ManyToMany
@@ -47,10 +48,10 @@ public class Account {
     private List<Auction> auctionsTakePart;
 
 
-    public Account(String name, String email, String password, AccountRole accountRole) {
+    public Account(String name, String email, String password, AccountRole role) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.accountRole = accountRole;
+        this.role = role;
     }
 }
