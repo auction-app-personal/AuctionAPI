@@ -32,13 +32,13 @@ public class AccountController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateAccount(@PathVariable("id") Long id, @RequestBody AccountDTO accountDTO) {
+    public ResponseEntity<Void> updateAccount(@PathVariable("id") Long id, @RequestBody AccountDTO accountDTO) {
         accountService.updateAccount(id, accountDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteAccount(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteAccount(@PathVariable("id") Long id) {
         accountService.deleteAccount(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
