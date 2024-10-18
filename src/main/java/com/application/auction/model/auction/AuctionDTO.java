@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -16,6 +17,7 @@ public class AuctionDTO {
     private Long id;
     private String name;
     private String description;
+    private LocalDateTime startTimestamp;
     private Duration duration = Duration.ofMinutes(0);
     private AuctionStatus status = AuctionStatus.CREATED;
     private Long ownerId;

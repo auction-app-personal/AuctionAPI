@@ -8,6 +8,7 @@ public class AuctionMapper {
         auctionDTO.setId(auction.getId());
         auctionDTO.setName(auction.getName());
         auctionDTO.setDescription(auction.getDescription());
+        auctionDTO.setStartTimestamp(auction.getStartTimestamp());
         auctionDTO.setDuration(auction.getDuration());
         auctionDTO.setStatus(auction.getStatus());
         auctionDTO.setOwnerId(auction.getAccount().getId());
@@ -19,6 +20,7 @@ public class AuctionMapper {
         auction.setId(auctionDTO.getId());
         auction.setName(auctionDTO.getName());
         auction.setDescription(auctionDTO.getDescription());
+        auction.setStartTimestamp(auctionDTO.getStartTimestamp());
         auction.setDuration(auctionDTO.getDuration());
         auction.setStatus(auctionDTO.getStatus());
         auction.setAccount(account);
