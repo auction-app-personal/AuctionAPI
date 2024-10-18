@@ -29,17 +29,14 @@ public class Lot {
     @Column(name="start_price")
     private double startPrice;
 
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private LotStatus status;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "auction_id")
     private Auction auction;
 
     @OneToMany(mappedBy = "lot", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Bid> bids;
-
-    public Lot(String name, String description, double startPrice, Auction auction) {
-        this.name = name;
-        this.description = description;
-        this.startPrice = startPrice;
-        this.auction = auction;
-    }
 }
