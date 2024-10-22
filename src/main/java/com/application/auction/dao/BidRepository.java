@@ -1,9 +1,9 @@
 package com.application.auction.dao;
 
-import com.application.auction.model.lot.Lot;
+import com.application.auction.model.bid.Bid;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface LotDAO extends CrudRepository<Lot, Long> {
+public interface BidRepository extends CrudRepository<Bid, Long> {
 }

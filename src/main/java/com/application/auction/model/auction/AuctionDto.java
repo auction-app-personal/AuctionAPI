@@ -1,6 +1,5 @@
 package com.application.auction.model.auction;
 
-import com.application.auction.model.account.AccountDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuctionDTO {
+public class AuctionDto {
     private Long id;
     private String name;
     private String description;

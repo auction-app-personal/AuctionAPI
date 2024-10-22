@@ -1,6 +1,6 @@
 package com.application.auction.controller;
 
-import com.application.auction.model.account.AccountDTO;
+import com.application.auction.model.account.AccountDto;
 import com.application.auction.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,19 +20,19 @@ public class AccountController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<AccountDTO>> getAllAccounts() {
-        List<AccountDTO> accounts = accountService.getAllAccounts();
+    public ResponseEntity<List<AccountDto>> getAllAccounts() {
+        List<AccountDto> accounts = accountService.getAllAccounts();
         return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AccountDTO> getAccountById(@PathVariable("id") Long id) {
-        AccountDTO accountDTO = accountService.getAccount(id);
+    public ResponseEntity<AccountDto> getAccountById(@PathVariable("id") Long id) {
+        AccountDto accountDTO = accountService.getAccount(id);
         return new ResponseEntity<>(accountDTO, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateAccount(@PathVariable("id") Long id, @RequestBody AccountDTO accountDTO) {
+    public ResponseEntity<Void> updateAccount(@PathVariable("id") Long id, @RequestBody AccountDto accountDTO) {
         accountService.updateAccount(id, accountDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }

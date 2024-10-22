@@ -16,18 +16,18 @@ import java.util.List;
 @Sql(scripts = "classpath:/database/general/reset.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
 @Sql(scripts = "classpath:/database/general/clean.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class AccountDaoTests {
-    private final AccountDAO accountDAO;
+    private final AccountRepository accountRepository;
 
     @Autowired
-    public AccountDaoTests(AccountDAO accountDAO) {
-        this.accountDAO = accountDAO;
+    public AccountDaoTests(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
     }
 
     @Test
     public void testAccountSave() {
         Account account = getSampleAccount();
-        Long id = accountDAO.save(account).getId();
-        Account savedAccount = accountDAO.findById(id).orElse(null);
+        Long id = accountRepository.save(account).getId();
+        Account savedAccount = accountRepository.findById(id).orElse(null);
         assert savedAccount != null;
         assert savedAccount.getId().equals(id);
         assert savedAccount.getRole() == AccountRole.ADMIN;
@@ -39,13 +39,13 @@ public class AccountDaoTests {
     @Test
     public void testAccountUpdate() {
         Account account = getSampleAccount();
-        Long id = accountDAO.save(account).getId();
+        Long id = accountRepository.save(account).getId();
         Account newAccount = getSampleAccount();
         newAccount.setId(id);
         newAccount.setRole(AccountRole.USER);
         newAccount.setEmail("test-update@test.com");
-        accountDAO.save(newAccount);
-        Account updatedAcc = accountDAO.findById(id).orElse(null);
+        accountRepository.save(newAccount);
+        Account updatedAcc = accountRepository.findById(id).orElse(null);
         assert updatedAcc != null;
         assert updatedAcc.getId().equals(id);
         assert updatedAcc.getRole() == AccountRole.USER;
@@ -57,10 +57,10 @@ public class AccountDaoTests {
     @Test
     public void testAccountDelete() {
         Account account = getSampleAccount();
-        Long id = accountDAO.save(account).getId();
-        assert accountDAO.findById(id).isPresent();
-        accountDAO.delete(account);
-        assert accountDAO.findById(id).isEmpty();
+        Long id = accountRepository.save(account).getId();
+        assert accountRepository.findById(id).isPresent();
+        accountRepository.delete(account);
+        assert accountRepository.findById(id).isEmpty();
     }
 
     @Test
@@ -69,8 +69,8 @@ public class AccountDaoTests {
         Account account = getSampleAccount();
         List<Auction> samples = getSampleAuctions();
         account.setAuctionsOwnedByAccount(samples);
-        Long id = accountDAO.save(account).getId();
-        Account savedAccount = accountDAO.findById(id).orElse(null);
+        Long id = accountRepository.save(account).getId();
+        Account savedAccount = accountRepository.findById(id).orElse(null);
         assert savedAccount != null;
         List<Auction> retrievedAuctions = savedAccount.getAuctionsOwnedByAccount();
         assert samples.size() == retrievedAuctions.size();

@@ -1,9 +1,9 @@
 package com.application.auction.service;
 
-import com.application.auction.dao.AccountDAO;
+import com.application.auction.dao.AccountRepository;
 import com.application.auction.exceptions.ResourceNotFoundException;
 import com.application.auction.model.account.Account;
-import com.application.auction.model.account.AccountDTO;
+import com.application.auction.model.account.AccountDto;
 import com.application.auction.model.account.AccountMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,42 +12,38 @@ import java.util.List;
 
 @Service
 public class AccountService {
-    private final AccountDAO accountDAO;
+    private final AccountRepository accountRepository;
 
     @Autowired
-    public AccountService(AccountDAO accountDAO) {
-        this.accountDAO = accountDAO;
+    public AccountService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
     }
 
-    public List<AccountDTO> getAllAccounts() {
-        List<Account> accounts = (List<Account>) accountDAO.findAll();
-        return accounts.stream().map(AccountMapper::toDTO).toList();
+    public List<AccountDto> getAllAccounts() {
+        List<Account> accounts = (List<Account>) accountRepository.findAll();
+        return accounts.stream().map(AccountMapper::toDto).toList();
     }
 
-    public AccountDTO getAccount(Long accountId) {
-        Account account = accountDAO.findById(accountId).orElse(null);
-        if (account == null) {
-            throw new ResourceNotFoundException("Account with id " + accountId + " not found");
-        }
-        return AccountMapper.toDTO(account);
+    public AccountDto getAccount(Long accountId) {
+        Account account = getAccountById(accountId);
+        return AccountMapper.toDto(account);
     }
 
 
-    public void updateAccount(Long id, AccountDTO accountDTO) {
-        Account account = accountDAO.findById(id).orElse(null);
-        if (account == null) {
-            throw new ResourceNotFoundException("Account with id " + id + " not found");
-        }
+    public void updateAccount(Long id, AccountDto accountDTO) {
+        Account account = getAccountById(id);
         account.setName(accountDTO.getName());
         account.setEmail(accountDTO.getEmail());
         account.setRole(accountDTO.getRole());
-        accountDAO.save(account);
+        accountRepository.save(account);
     }
 
     public void deleteAccount(Long id) {
-        if (!accountDAO.existsById(id)) {
-            throw new ResourceNotFoundException("Account with id " + id + " not found");
-        }
-        accountDAO.deleteById(id);
+        Account account = getAccountById(id);
+        accountRepository.delete(account);
+    }
+
+    private Account getAccountById(Long id) {
+        return accountRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Account with id " + id + " not found"));
     }
 }
