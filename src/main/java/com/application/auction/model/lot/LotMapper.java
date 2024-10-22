@@ -1,7 +1,5 @@
 package com.application.auction.model.lot;
 
-import com.application.auction.model.auction.Auction;
-
 public class LotMapper {
     public static LotDto toDto(Lot lot) {
         LotDto lotDto = new LotDto();

@@ -33,11 +33,4 @@ public class Bid {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Account account;
-
-    public Bid(double amount, LocalDateTime timeCreated, Lot lot, Account account) {
-        this.amount = amount;
-        this.timeCreated = timeCreated;
-        this.lot = lot;
-        this.account = account;
-    }
 }

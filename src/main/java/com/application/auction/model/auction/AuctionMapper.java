@@ -1,7 +1,5 @@
 package com.application.auction.model.auction;
 
-import com.application.auction.model.account.Account;
-
 public class AuctionMapper {
     public static AuctionDto toDto(Auction auction) {
         AuctionDto auctionDTO = new AuctionDto();
