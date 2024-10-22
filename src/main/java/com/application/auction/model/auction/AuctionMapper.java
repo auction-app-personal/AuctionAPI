@@ -3,8 +3,8 @@ package com.application.auction.model.auction;
 import com.application.auction.model.account.Account;
 
 public class AuctionMapper {
-    public static AuctionDTO toDTO(Auction auction) {
-        AuctionDTO auctionDTO = new AuctionDTO();
+    public static AuctionDto toDto(Auction auction) {
+        AuctionDto auctionDTO = new AuctionDto();
         auctionDTO.setId(auction.getId());
         auctionDTO.setName(auction.getName());
         auctionDTO.setDescription(auction.getDescription());
@@ -15,15 +15,14 @@ public class AuctionMapper {
         return auctionDTO;
     }
 
-    public static Auction toEntity(AuctionDTO auctionDTO, Account account) {
+    public static Auction toEntity(AuctionDto auctionDto) {
         Auction auction = new Auction();
-        auction.setId(auctionDTO.getId());
-        auction.setName(auctionDTO.getName());
-        auction.setDescription(auctionDTO.getDescription());
-        auction.setStartTimestamp(auctionDTO.getStartTimestamp());
-        auction.setDuration(auctionDTO.getDuration());
-        auction.setStatus(auctionDTO.getStatus());
-        auction.setAccount(account);
+        auction.setId(auctionDto.getId());
+        auction.setName(auctionDto.getName());
+        auction.setDescription(auctionDto.getDescription());
+        auction.setStartTimestamp(auctionDto.getStartTimestamp());
+        auction.setDuration(auctionDto.getDuration());
+        auction.setStatus(auctionDto.getStatus());
         return auction;
     }
 }
